@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  nginx-edge:
+    image: nginx:alpine
+    container_name: ecommerce-nginx-edge
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - spring-api-gateway
+    networks:
+      - internal-net
+
+  spring-api-gateway:
+    image: eclipse-temurin:17-jre-alpine
+    container_name: spring-cloud-gateway
+    expose:
+      - "8080"
+    networks:
+      - internal-net
+
+networks:
+  internal-net:
+    driver: bridge
